@@ -1,2 +1,2 @@
-pattern_extractor="curl -sI https://login.ubuntu.com | sed -n 's|X-Bzr-Revision-Number: \(.*\)|\1|p'"
-message="New SSO version"
+pattern_extractor="curl -s -H \"X-Ubuntu-Architecture: amd64\" https://search.apps.ubuntu.com/api/v1/package/core/edge | sed -e 's|.*\"revision\": \(.*\), \"status\".*|\1|'"
+message="New OS snap in edge channel"

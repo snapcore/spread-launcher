@@ -1,2 +1,2 @@
 #!/bin/sh
-export CORE_CHANNEL=stable
+export SPREAD_CORE_CHANNEL=stable

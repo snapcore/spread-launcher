@@ -1,2 +1,2 @@
 #!/bin/sh
-export CORE_CHANNEL=edge
+export SPREAD_CORE_CHANNEL=edge

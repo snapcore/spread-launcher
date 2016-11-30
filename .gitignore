@@ -2,3 +2,5 @@ parts/
 prime/
 stage/
 *snap
+snapd-core-*.response
+snapd-core-*.headers

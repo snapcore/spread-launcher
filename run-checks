@@ -2,22 +2,14 @@
 
 mkdir -p bin
 ( cd bin &&  wget https://niemeyer.s3.amazonaws.com/spread-amd64.tar.gz -O spread.tar.gz && tar xzvf spread.tar.gz )
-git clone https://github.com/snapcore/snapd target
+git clone https://github.com/fgimenez/validator target
 
-# determine branch
-export SPREAD_CORE_CHANNEL=beta
+. ./options
+SPREAD_TARGET_UBUNTU_CORE_REVISION=$(echo "$TRAVIS_COMMIT_MESSAGE" | perl -n -e '/'"$message"' \((.*?)\)/ && print $1')
+SPREAD_TARGET_SNAPD_VERSION=$(git ls-remote --heads git@github.com:snapcore/snapd.git | awk '{print $2}' | grep release | awk -F"/" '{print $4}' | tail -n 1)
 
-branch=master
-url=$(curl -s -H 'X-Ubuntu-Architecture: amd64' -H 'X-Ubuntu-Series: 16' https://search.apps.ubuntu.com/api/v1/snaps/details/core?channel=$SPREAD_CORE_CHANNEL | jq -j 'anon_download_url')
-curl -L -o core.snap $url
-sudo unsquashfs -d /tmp/unpack core.snap
-version=$(cut -d'=' -f 2 < /tmp/unpack/usr/lib/snapd/info | cut -d'+' -f 1)
-major=$(echo $version | cut -d'.' -f 1)
-minor=$(echo $version | cut -d'.' -f 2)
-release_branch="release/${major}.${minor}"
+export UBUNTU_CORE_CHANNEL=beta
+export SPREAD_TARGET_UBUNTU_CORE_REVISION
+export SPREAD_TARGET_SNAPD_VERSION
 
-cd target
-if git branch -r | grep "$release_branch"; then
-    git checkout "$release_branch"
-fi
-../bin/spread -v linode:ubuntu-16.04-64 linode:ubuntu-core-16-64
+../bin/spread -v linode:ubuntu-16.04-64 linode:ubuntu-16.04-32 linode:ubuntu-14.04-64

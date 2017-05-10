@@ -12,5 +12,5 @@ export UBUNTU_CORE_CHANNEL=stable
 export SPREAD_TARGET_UBUNTU_CORE_REVISION
 export SPREAD_TARGET_SNAPD_VERSION
 
-cd target || exit
+cd target/tests || exit
 ../bin/spread -v linode:ubuntu-16.04-64 linode:ubuntu-16.04-32 linode:ubuntu-14.04-64

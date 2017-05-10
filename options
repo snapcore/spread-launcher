@@ -1,2 +1,2 @@
-pattern_extractor="curl -s -H 'X-Ubuntu-Architecture: amd64' -H 'X-Ubuntu-Series: 16' https://search.apps.ubuntu.com/api/v1/snaps/details/ubuntu-core?channel=edge | jq -j '.revision'"
-message="New amd64 ubuntu-core snap in edge channel"
+pattern_extractor="curl -s -H 'X-Ubuntu-Architecture: amd64' -H 'X-Ubuntu-Series: 16' https://search.apps.ubuntu.com/api/v1/snaps/details/ubuntu-core?channel=stable | jq -j '.revision'"
+message="New amd64 ubuntu-core snap in stable channel"

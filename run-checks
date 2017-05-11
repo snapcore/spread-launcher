@@ -5,11 +5,9 @@ mkdir -p bin
 git clone https://github.com/fgimenez/validator target
 
 . ./options
-SPREAD_TARGET_UBUNTU_CORE_REVISION=$(echo "$TRAVIS_COMMIT_MESSAGE" | perl -n -e '/'"$message"' \((.*?)\)/ && print $1')
 SPREAD_TARGET_SNAPD_VERSION=$(git ls-remote --heads https://github.com/snapcore/snapd.git | awk '{print $2}' | grep release | awk -F"/" '{print $4}' | tail -n 1)
 
 export UBUNTU_CORE_CHANNEL=stable
-export SPREAD_TARGET_UBUNTU_CORE_REVISION
 export SPREAD_TARGET_SNAPD_VERSION
 
 cd target/tests || exit

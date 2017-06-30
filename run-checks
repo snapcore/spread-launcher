@@ -8,7 +8,7 @@ git clone https://github.com/snapcore/snapd target
 export SPREAD_CORE_CHANNEL=stable
 
 branch=master
-url=$(curl -s -H 'X-Ubuntu-Architecture: i386' -H 'X-Ubuntu-Series: 16' https://search.apps.ubuntu.com/api/v1/snaps/details/core?channel=$SPREAD_CORE_CHANNEL | jq -j 'anon_download_url')
+url=$(curl -s -H 'X-Ubuntu-Architecture: i386' -H 'X-Ubuntu-Series: 16' https://search.apps.ubuntu.com/api/v1/snaps/details/core?channel=$SPREAD_CORE_CHANNEL | jq -j '.anon_download_url')
 curl -L -o core.snap $url
 sudo unsquashfs -d /tmp/unpack core.snap
 version=$(cut -d'=' -f 2 < /tmp/unpack/usr/lib/snapd/info | cut -d'+' -f 1)

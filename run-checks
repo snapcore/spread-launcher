@@ -16,7 +16,7 @@ major=$(echo $version | cut -d'.' -f 1)
 minor=$(echo $version | cut -d'.' -f 2)
 release_branch="release/${major}.${minor}"
 
-cd target
+cd target || exit 1
 if git branch -r | grep "$release_branch"; then
     git checkout "$release_branch"
 fi

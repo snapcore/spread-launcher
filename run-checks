@@ -10,5 +10,5 @@ SPREAD_TARGET_SNAPD_VERSION=$(git ls-remote --heads https://github.com/snapcore/
 export UBUNTU_CORE_CHANNEL=stable
 export SPREAD_TARGET_SNAPD_VERSION
 
-cd target/tests || exit
+cd target/tests || exit 1
 ../../bin/spread -v linode:ubuntu-16.04-64 linode:ubuntu-16.04-32 linode:ubuntu-14.04-64

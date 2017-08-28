@@ -5,4 +5,5 @@ mkdir -p bin
 git clone https://github.com/snapcore/snapd target
 
 export SPREAD_KERNEL_CHANNEL=beta
-cd target && ../bin/spread -v linode:ubuntu-core-16-64 linode:ubuntu-core-16-64-fixme
+cd target || exit 1
+../bin/spread -v linode:ubuntu-core-16-64

@@ -8,4 +8,4 @@ export SPREAD_CORE_CHANNEL=stable
 export SPREAD_NEW_CORE_CHANNEL=edge
 
 cd target
-../bin/spread -v linode:ubuntu-core-16-64:tests/main/core-snap-refresh-on-core
+../bin/spread -v google:ubuntu-core-16-64:tests/main/core-snap-refresh-on-core

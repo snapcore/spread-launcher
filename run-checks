@@ -20,4 +20,4 @@ cd target || exit 1
 if git branch -r | grep "$release_branch"; then
     git checkout "$release_branch"
 fi
-../bin/spread -v linode:ubuntu-16.04-64 linode:ubuntu-core-16-64
+../bin/spread -v google:ubuntu-16.04-64 google:ubuntu-core-16-64

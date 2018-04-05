@@ -15,4 +15,4 @@ last_build_number=$(echo "$TRAVIS_COMMIT_MESSAGE" | perl -n -e '/'"$message"' \(
 
 cd target || exit 1
 git checkout "${last_build_number}"
-../bin/spread -v linode:ubuntu-14.04-64:tests/main/
+../bin/spread -v google:ubuntu-14.04-64:tests/main/

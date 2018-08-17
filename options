@@ -1,2 +1,2 @@
-pattern_extractor="curl -s https://launchpad.net/ubuntu/+source/snapd | perl -0777 -n -e 'm/<tr class=\"section-heading shaded\" style=\"vertical-align: middle\">.*?<a href=\"\/ubuntu\/trusty\/\+source\/snapd\">.*?<\/tr>\s*<tr class=\"archive_package_row\">.*?<img src=\"\/@@\/package-source\" \/>\s*(.*?)\s*<\/a>\s*<\/td>\s*<td>\s*proposed.*?<\/tr>/sg && print \$1' > partial && if grep -q package-source partial; then cat partial | perl -0777 -n -e 'm/\s*<img src=\"\/@@\/package-source\" \/>\s*(.*?)$/sg && print \$1'; else cat partial; fi"
-message="New snapd package in trusty's proposed"
+pattern_extractor="if [] && [ $(date +%H%M) \< "0200" ]; then echo ""; else date +%V; fi"
+message="Update Ubuntu 1604 32bits on GCE"

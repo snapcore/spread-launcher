@@ -1,18 +1,11 @@
 #!/bin/sh
 
-mkdir -p bin
-( cd bin &&  wget https://niemeyer.s3.amazonaws.com/spread-amd64.tar.gz -O spread.tar.gz && tar xzvf spread.tar.gz )
-git clone https://github.com/snapcore/snapd target
-
-export SPREAD_MODIFY_CORE_SNAP_FOR_REEXEC=0
-export SPREAD_TRUST_TEST_KEYS=false
-export SPREAD_SRU_VALIDATION=1
-export SPREAD_SNAP_REEXEC=0
-export SPREAD_CORE_CHANNEL=beta
+git clone https://github.com/snapcore/spread-images
+cp sa.json spread-images/sa.json
 
 . ./options
 last_build_number=$(echo "$TRAVIS_COMMIT_MESSAGE" | perl -n -e '/'"$message"' \((.*?)\)/ && print $1' | cut -d+ -f1 | cut -d~ -f1)
 
-cd target || exit 1
 git checkout "${last_build_number}"
-../bin/spread -v google:ubuntu-14.04-64:tests/main/
+
+./spread-images/run_google_task.sh update-ubuntu-16.04-64

@@ -1,8 +1,7 @@
 #!/bin/sh
 
 # Prepare spread-images project
-mkdir -p "$(pwd)/spread-images"
-export SPREAD_IMAGES_DIR="$(pwd)/spread-images/target"
+export SPREAD_IMAGES_DIR="$(pwd)/target"
 git clone https://github.com/snapcore/spread-images "$SPREAD_IMAGES_DIR"
 ( cd "$SPREAD_IMAGES_DIR" && git checkout adaptation-for-spread-cron-integration )
 mv sa.json "$SPREAD_IMAGES_DIR/sa.json"
@@ -26,4 +25,5 @@ gcloud auth activate-service-account --key-file="$SPREAD_IMAGES_DIR/sa.json" --p
 
 # Run tests
 cd "$SPREAD_IMAGES_DIR"
+env
 ./run_google_task.sh update-ubuntu-16.04-64

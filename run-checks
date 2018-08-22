@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Prepare spread-images project
-export SPREAD_IMAGES_DIR="$(pwd)/target"
+export SPREAD_IMAGES_DIR="$(pwd)/spread-images"
 git clone https://github.com/snapcore/spread-images "$SPREAD_IMAGES_DIR"
 ( cd "$SPREAD_IMAGES_DIR" && git checkout adaptation-for-spread-cron-integration )
 mv sa.json "$SPREAD_IMAGES_DIR/sa.json"

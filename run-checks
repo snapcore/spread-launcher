@@ -1,7 +1,6 @@
 #!/bin/sh
 
-sudo find / -name *.json
-exit 1
+set -x 
 
 # Prepare spread-images project
 export SPREAD_IMAGES_DIR="$(pwd)/target"

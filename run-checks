@@ -2,16 +2,22 @@
 
 set -x
 
-mkdir -p "$(pwd)/target"
+# Creating target dir
+mkdir -p target
+
+# Get spread
+export SPREAD_DIR="$(pwd)/bin"
+mkdir -p bin
+( cd bin &&  wget https://niemeyer.s3.amazonaws.com/spread-amd64.tar.gz -O spread.tar.gz && tar xzvf spread.tar.gz )
 
 # Prepare spread-images project
-export SPREAD_IMAGES_DIR="$(pwd)/target/spread-images"
+export SPREAD_IMAGES_DIR="$(pwd)/spread-images"
 git clone https://github.com/snapcore/spread-images "$SPREAD_IMAGES_DIR"
 ( cd "$SPREAD_IMAGES_DIR" && git checkout adaptation-for-spread-cron-integration )
 mv sa.json "$SPREAD_IMAGES_DIR/sa.json"
 
 # Prepare snapd project
-export SNAPD_DIR="$(pwd)/target/snapd"
+export SNAPD_DIR="$(pwd)/snapd"
 git clone https://github.com/snapcore/snapd.git "$SNAPD_DIR"
 
 # Checkout to last_build_number
@@ -26,6 +32,21 @@ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 sudo apt-get update && sudo apt-get install google-cloud-sdk
 gcloud auth activate-service-account --key-file="$SPREAD_IMAGES_DIR/sa.json" --project computeengine
 
-# Run tests
-cd "$SPREAD_IMAGES_DIR"
-./run_google_task.sh update-ubuntu-16.04-64
+
+export TASK=update-ubuntu-16.04-64
+
+
+# run spread-images task
+ln -s spread-images target
+cd target
+. google_task.sh
+get_env_for_task_google "$TASK"
+run_spread_images "$TASK"
+cd ..
+
+# run snapd tests
+ln -s snapd target
+. "$SPREAD_IMAGES_DIR/google_task.sh"
+cd target
+get_env_for_task_google "$TASK"
+run_snapd "$TASK"

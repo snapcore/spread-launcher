@@ -2,11 +2,12 @@
 
 mkdir -p bin
 ( cd bin &&  wget https://niemeyer.s3.amazonaws.com/spread-amd64.tar.gz -O spread.tar.gz && tar xzvf spread.tar.gz )
-git clone https://github.com/sergiocazzolato/validator target
+git clone https://github.com/sergiocazzolato/validator
 
 . ./options
 export SPREAD_TARGET_SNAPD_VERSION=$(git ls-remote --heads https://github.com/snapcore/snapd.git | awk '{print $2}' | grep release | awk -F"/" '{print $4}' | tail -n 1)
 export UBUNTU_CORE_CHANNEL=stable
 
-cd target/tests || exit 1
-../../bin/spread -v google:ubuntu-18.04-64 google:ubuntu-16.04-64 google:ubuntu-16.04-32 google:ubuntu-14.04-64
+cp -rf validator/tests target
+cd target
+../bin/spread -v google:ubuntu-18.04-64 google:ubuntu-16.04-64 google:ubuntu-16.04-32 google:ubuntu-14.04-64

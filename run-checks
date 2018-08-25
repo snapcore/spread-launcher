@@ -11,7 +11,7 @@ mkdir -p bin
 
 # Prepare spread-images project
 export SPREAD_IMAGES_DIR="$CURR_DIR/spread-images"
-git clone https://github.com/snapcore/spread-images "$SPREAD_IMAGES_DIR"
+git clone https://github.com/sergiocazzolato/spread-images "$SPREAD_IMAGES_DIR"
 ( cd "$SPREAD_IMAGES_DIR" && git checkout adaptation-for-spread-cron-integration )
 mv sa.json "$SPREAD_IMAGES_DIR/sa.json"
 

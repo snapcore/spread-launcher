@@ -38,7 +38,7 @@ cd "$CURR_DIR"
 ln -s spread-images target
 cd target
 ls -al
-. google_task.sh
+. ./google_task.sh
 get_env_for_task_google "$TASK"
 run_spread_images "$TASK"
 cd "$CURR_DIR"

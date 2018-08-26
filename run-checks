@@ -31,7 +31,8 @@ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 sudo apt-get update && sudo apt-get install google-cloud-sdk
 gcloud auth activate-service-account --key-file="$SPREAD_IMAGES_DIR/sa.json" --project computeengine
 
-export TASK=update-ubuntu-16.04-64
+export TASK="update-ubuntu-16.04-64"
+export TMP_IMAGE_ID="$RANDOM"
 
 # run spread-images task
 export SPREAD_IMAGES_DIR="$CURR_DIR/target"

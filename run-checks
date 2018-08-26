@@ -11,13 +11,13 @@ mkdir -p bin
 
 # Prepare spread-images project
 export SPREAD_IMAGES_DIR="$CURR_DIR/target"
-git clone https://github.com/sergiocazzolato/spread-images "$SPREAD_IMAGES_DIR"
+git clone https://github.com/sergiocazzolato/spread-images
 ( cd "$SPREAD_IMAGES_DIR" && git checkout adaptation-for-spread-cron-integration )
 mv sa.json "$SPREAD_IMAGES_DIR/sa.json"
 
 # Prepare snapd project
 export SNAPD_DIR="$CURR_DIR/target"
-git clone https://github.com/snapcore/snapd.git "$SNAPD_DIR"
+git clone https://github.com/snapcore/snapd.git
 
 # Checkout to last_build_number
 . ./options
@@ -45,8 +45,7 @@ run_spread_images "$TASK"
 cd "$CURR_DIR"
 rm -rf target
 cp -rf snapd target
-. "$SPREAD_IMAGES_DIR/google_task.sh"
+. ./spread-images/google_task.sh
 cd target
-ls -al
 get_env_for_task_google "$TASK"
 run_snapd "$TASK"

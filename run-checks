@@ -2,7 +2,7 @@
 
 set -x
 
-TASK="update-fedora-28-64"
+TASK="update-arch-linux"
 CURR_DIR="$(pwd)"
 TMP_IMAGE_ID="$(date +%N)"
 

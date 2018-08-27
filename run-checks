@@ -2,22 +2,25 @@
 
 set -x
 
+TASK="update-ubuntu-16.04-64"
 CURR_DIR="$(pwd)"
+TMP_IMAGE_ID="$(date +%N)"
+
+INIT_SNAPD_DIR="$CURR_DIR/snapd"
+INIT_SPREAD_IMAGES_DIR="$CURR_DIR/spread-images"
+TARGET_DIR="$CURR_DIR/target"
+SPREAD_DIR="$CURR_DIR/bin"
 
 # Get spread
-export SPREAD_DIR="$CURR_DIR/bin"
 mkdir -p bin
 ( cd bin &&  wget https://niemeyer.s3.amazonaws.com/spread-amd64.tar.gz -O spread.tar.gz && tar xzvf spread.tar.gz )
 
 # Prepare spread-images project
-export SPREAD_IMAGES_DIR="$CURR_DIR/spread-images"
-git clone https://github.com/sergiocazzolato/spread-images "$CURR_DIR/spread-images"
-( cd "$CURR_DIR/spread-images" && git checkout adaptation-for-spread-cron-integration )
-cp sa.json "$CURR_DIR/spread-images/sa.json"
+git clone https://github.com/snapcore/spread-images "$INIT_SPREAD_IMAGES_DIR"
+cp sa.json "$INIT_SPREAD_IMAGES_DIR/sa.json"
 
 # Prepare snapd project
-export SNAPD_DIR="$CURR_DIR/snapd"
-git clone https://github.com/snapcore/snapd.git "$CURR_DIR/snapd"
+git clone https://github.com/snapcore/snapd.git "$INIT_SNAPD_DIR"
 
 # Checkout to last_build_number
 . ./options
@@ -29,27 +32,23 @@ export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
 echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 sudo apt-get update && sudo apt-get install google-cloud-sdk
-gcloud auth activate-service-account --key-file="$SPREAD_IMAGES_DIR/sa.json" --project computeengine
-
-export TASK="update-ubuntu-16.04-64"
-export TMP_IMAGE_ID="$(date +%N)"
+gcloud auth activate-service-account --key-file="sa.json" --project computeengine
 
 # run spread-images task
-export SPREAD_IMAGES_DIR="$CURR_DIR/target"
-cd "$CURR_DIR"
-cp -rf "$CURR_DIR/spread-images" "$CURR_DIR/target"
-cd "$CURR_DIR/target"
-. "$CURR_DIR/spread-images/google_task.sh"
+SNAPD_DIR="$INIT_SNAPD_DIR"
+SPREAD_IMAGES_DIR="$TARGET_DIR"
+cp -rf "$INIT_SPREAD_IMAGES_DIR" "$TARGET_DIR"
+cd "$TARGET_DIR"
+. "$INIT_SPREAD_IMAGES_DIR/google_task.sh"
 get_env_for_task_google "$TASK"
 run_spread_images "$TASK"
 
 # run snapd tests
-export SNAPD_DIR="$CURR_DIR/target"
-export SPREAD_IMAGES_DIR="$CURR_DIR/spread-images"
-cd "$CURR_DIR"
-rm -rf "$CURR_DIR/target"
-cp -rf "$CURR_DIR/snapd" "$CURR_DIR/target"
-. "$CURR_DIR/spread-images/google_task.sh"
-cd "$CURR_DIR/target"
+SNAPD_DIR="$TARGET_DIR"
+SPREAD_IMAGES_DIR="$INIT_SPREAD_IMAGES_DIR"
+rm -rf "$TARGET_DIR"
+cp -rf "$INIT_SNAPD_DIR" "$TARGET_DIR"
+cd "$TARGET_DIR"
+. "$INIT_SPREAD_IMAGES_DIR/google_task.sh"
 get_env_for_task_google "$TASK"
 run_snapd "$TASK"

@@ -1,2 +1,2 @@
-pattern_extractor="if [] && [ $(date +%H%M) \< "0200" ]; then echo ""; else date +%V; fi"
-message="Update Ubuntu 1604 64bits on GCE"
+pattern_extractor="if [] && [ $(date +%H%M) \< "0800" ]; then echo ""; else date +%V; fi"
+message="Update Debian 9 64bits on GCE"

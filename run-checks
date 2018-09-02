@@ -2,7 +2,7 @@
 
 set -x
 
-TASK="update-ubuntu-16.04-64"
+TASK="update-opensuse-42-3"
 CURR_DIR="$(pwd)"
 TMP_IMAGE_ID="$(date +%N)"
 

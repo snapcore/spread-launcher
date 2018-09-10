@@ -9,4 +9,4 @@ cd target || exit 1
 
 # unity test is failing, only run docker
 ../bin/spread -v google:tests/nightly/docker
-../bin/spread -v google:ubuntu-16.04-64:tests/nested/extra-snaps-assertions
+../bin/spread -v google:ubuntu-16.04-64:tests/nightly/unity

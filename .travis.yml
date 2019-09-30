@@ -6,7 +6,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_cc49829385d6_key -iv $encrypted_cc49829385d6_iv -in sa.json.enc -out sa.json -d
 install:
 - sudo apt-get update -qq
-- sudo apt-get install -qq xdelta3 python3-pip
+- sudo apt-get install -qq xdelta3 python3-pip python3-setuptools
 - sudo pip3 install yamlordereddictloader
 script:
 - "./run-checks"

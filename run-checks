@@ -13,7 +13,7 @@ SPREAD_DIR="$CURR_DIR/bin"
 
 # Get spread
 mkdir -p bin
-( cd bin &&  wget https://cachio.s3-us-west-2.amazonaws.com/spread/spread2 && mv spread2 spread )
+( cd bin &&  wget https://cachio.s3-us-west-2.amazonaws.com/spread/spread2 && mv spread2 spread && chmod +x spread )
 
 # Prepare spread-images project
 git clone https://github.com/snapcore/spread-images "$INIT_SPREAD_IMAGES_DIR"

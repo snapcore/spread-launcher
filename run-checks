@@ -1,54 +1,13 @@
 #!/bin/sh
 
-set -x
+wget "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img"
+gsutil cp xenial-server-cloudimg-amd64-disk1.img gs://spread-snapd-tests/images/
 
-TASK="update-ubuntu-19.10-64"
-CURR_DIR="$(pwd)"
-TMP_IMAGE_ID="$(date +%N)"
+wget "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img"
+gsutil cp bionic-server-cloudimg-amd64.img gs://spread-snapd-tests/images/
 
-INIT_SNAPD_DIR="$CURR_DIR/snapd"
-INIT_SPREAD_IMAGES_DIR="$CURR_DIR/spread-images"
-TARGET_DIR="$CURR_DIR/target"
-SPREAD_DIR="$CURR_DIR/bin"
+wget "https://cloud-images.ubuntu.com/eoan/current/eoan-server-cloudimg-amd64.img"
+gsutil cp eoan-server-cloudimg-amd64.img gs://spread-snapd-tests/images/
 
-# Get spread
-mkdir -p bin
-( cd bin &&  wget https://niemeyer.s3.amazonaws.com/spread-amd64.tar.gz -O spread.tar.gz && tar xzvf spread.tar.gz )
-
-# Prepare spread-images project
-git clone https://github.com/snapcore/spread-images "$INIT_SPREAD_IMAGES_DIR"
-cp sa.json "$INIT_SPREAD_IMAGES_DIR/sa.json"
-
-# Prepare snapd project
-git clone https://github.com/snapcore/snapd.git "$INIT_SNAPD_DIR"
-
-# Checkout to last_build_number
-. ./options
-last_build_number=$(echo "$TRAVIS_COMMIT_MESSAGE" | perl -n -e '/'"$message"' \((.*?)\)/ && print $1' | cut -d+ -f1 | cut -d~ -f1)
-git checkout "${last_build_number}"
-
-# Install gcloud sdk and login into GCE using google account
-export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
-echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-sudo apt-get update && sudo apt-get install google-cloud-sdk
-gcloud auth activate-service-account --key-file="sa.json" --project computeengine
-
-# run spread-images task
-SNAPD_DIR="$INIT_SNAPD_DIR"
-SPREAD_IMAGES_DIR="$TARGET_DIR"
-cp -rf "$INIT_SPREAD_IMAGES_DIR" "$TARGET_DIR"
-cd "$TARGET_DIR"
-. "$INIT_SPREAD_IMAGES_DIR/google_task.sh"
-get_env_for_task_google "$TASK"
-run_spread_images "$TASK"
-
-# run snapd tests
-SNAPD_DIR="$TARGET_DIR"
-SPREAD_IMAGES_DIR="$INIT_SPREAD_IMAGES_DIR"
-rm -rf "$TARGET_DIR"
-cp -rf "$INIT_SNAPD_DIR" "$TARGET_DIR"
-cd "$TARGET_DIR"
-. "$INIT_SPREAD_IMAGES_DIR/google_task.sh"
-get_env_for_task_google "$TASK"
-run_snapd "$TASK"
+wget "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
+gsutil cp focal-server-cloudimg-amd64.img gs://spread-snapd-tests/images/

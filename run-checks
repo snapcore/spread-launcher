@@ -1,6 +1,13 @@
 #!/bin/sh
 
-snap install --classic google-cloud-sdk
+if [ $(find /etc/apt/sources.list.d/google-cloud*.list | wc -l) -eq 0 ]; then
+    CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+    export CLOUD_SDK_REPO
+    echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+    sudo apt-get update 
+    suod apt-get install -y google-cloud-sdk
+fi
 gcloud auth activate-service-account --key-file=sa.json
 
 wget -q "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img"

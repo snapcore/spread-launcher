@@ -21,3 +21,6 @@ gsutil cp eoan-server-cloudimg-amd64.img gs://spread-snapd-tests/images/cloudimg
 
 wget -q "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
 gsutil cp focal-server-cloudimg-amd64.img gs://spread-snapd-tests/images/cloudimg/
+
+wget -q "https://cloud-images.ubuntu.com/groovy/current/groovy-server-cloudimg-amd64.img"
+gsutil cp groovy-server-cloudimg-amd64.img gs://spread-snapd-tests/images/cloudimg/

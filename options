@@ -1,2 +1,2 @@
-pattern_extractor="curl -s https://api.travis-ci.org/repos/snapcore/snapd/builds?event_type=push | jq -j 'map(select(.result == 0) | select(.branch == \"master\")) | .[0].number'"
-message="sync snapd-vendor with snapd after merge and green build"
+pattern_extractor="git ls-remote git://github.com/snapcore/snapd.git refs/heads/master | cut -f 1"
+message="sync snapd-vendor with snapd after merge"

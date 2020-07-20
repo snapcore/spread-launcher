@@ -7,6 +7,4 @@ git clone https://github.com/snapcore/snapd target
 
 cd target
 
-export SPREAD_NEW_CORE_CHANNEL=edge
-
 ../bin/spread -v google:tests/nightly/

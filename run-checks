@@ -7,4 +7,6 @@ git clone https://github.com/snapcore/snapd target
 
 cd target
 
-../bin/spread -v google:tests/nightly/
+export SPREAD_NEW_CORE_CHANNEL=edge
+
+../bin/spread -v google-nested:tests/nested/core/ google-nested:tests/nested/core20/

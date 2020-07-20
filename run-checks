@@ -9,10 +9,4 @@ cd target
 
 export SPREAD_NEW_CORE_CHANNEL=edge
 
-# Classic -> 16.04 18.04 20.04
-# Core -> 16.04 18.04
-# Core20 -> 20.04
-# Manual -> 19.10 20.04
-
-
-../bin/spread -v google:tests/nightly/ google-nested:ubuntu-16.04-64:tests/nested/classic/ google-nested:ubuntu-18.04-64:tests/nested/classic/ google-nested:ubuntu-20.04-64:tests/nested/classic/ google-nested:ubuntu-16.04-64:tests/nested/core/ google-nested:ubuntu-18.04-64:tests/nested/core/ google-nested:ubuntu-20.04-64:tests/nested/core20/ google-nested:ubuntu-19.10-64:tests/nested/manual/ google-nested:ubuntu-20.04-64:tests/nested/manual/
+../bin/spread -v google:tests/nightly/

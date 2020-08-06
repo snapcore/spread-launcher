@@ -10,4 +10,4 @@ cd target
 export SPREAD_NEW_CORE_CHANNEL=edge
 export SPREAD_ENABLE_KVM=true
 
-../bin/spread -v google-nested:ubuntu-18.04-64:tests/nested/core/ google-nested:ubuntu-18.04-64:tests/nested/manual/
+../bin/spread -v google-nested:ubuntu-16.04-64:tests/nested/core/ google-nested:ubuntu-16.04-64:tests/nested/manual/

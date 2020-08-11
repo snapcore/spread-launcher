@@ -7,6 +7,7 @@ git clone https://github.com/snapcore/snapd target
 
 cd target
 
+export SPREAD_CORE_CHANNEL=stable
 export SPREAD_NEW_CORE_CHANNEL=edge
 export SPREAD_ENABLE_KVM=true
 

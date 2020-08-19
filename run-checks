@@ -16,9 +16,6 @@ gsutil cp xenial-server-cloudimg-amd64-disk1.img gs://spread-snapd-tests/images/
 wget -q "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img"
 gsutil cp bionic-server-cloudimg-amd64.img gs://spread-snapd-tests/images/cloudimg/
 
-wget -q "https://cloud-images.ubuntu.com/eoan/current/eoan-server-cloudimg-amd64.img"
-gsutil cp eoan-server-cloudimg-amd64.img gs://spread-snapd-tests/images/cloudimg/
-
 wget -q "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
 gsutil cp focal-server-cloudimg-amd64.img gs://spread-snapd-tests/images/cloudimg/
 

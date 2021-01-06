@@ -35,8 +35,7 @@ restore: |
 execute: |
     # get origin merge commit
     . ./options
-    build_number=$(echo "$TRAVIS_COMMIT_MESSAGE" | sed -e "s/$message (\(.*\))/\1/")
-    origin_commit=$(curl -s https://api.travis-ci.org/repos/snapcore/snapd/builds?number=$build_number | jq -j '.[0].commit')
+    origin_commit="$COMMIT_SHA"
 
     # clone origin repo and prepare for getting vendor dependencies
     git clone https://github.com/snapcore/snapd origin

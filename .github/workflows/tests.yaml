@@ -13,5 +13,10 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run test
+      env:
+          LAUNCHPAD_ID_RSA: ${{ secrets.LAUNCHPAD_ID_RSA }}
+          LAUNCHPAD_COOKIES: ${{ secrets.LAUNCHPAD_COOKIES }}          
       run: |
+          echo "$LAUNCHPAD_ID_RSA" > target/tasks/snapd-vendor-sync/id_rsa
+          echo "$LAUNCHPAD_COOKIES" > target/tasks/snapd-vendor-sync/cookies.txt
           ./run-checks

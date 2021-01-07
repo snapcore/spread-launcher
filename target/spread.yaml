@@ -2,6 +2,9 @@ project: spread-cron-update-gce-bucket
 
 path: /root/spread
 
+environment:
+    PROJECT_PATH: /root/spread
+
 backends:
     google:
         key: "$(HOST: echo $SPREAD_GOOGLE_KEY)"

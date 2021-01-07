@@ -1,4 +1,4 @@
-ummary: Update the gce test bucket
+summary: Update the gce test bucket
 
 prepare: |
     snap install google-cloud-sdk

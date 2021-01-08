@@ -2,7 +2,7 @@
 
 set -x
 
-GOOGLE_ACTION="update"
+GOOGLE_ACTION="update-image"
 GOOGLE_TASK="ubuntu-20.04-64"
 
 CURR_DIR="$(pwd)"

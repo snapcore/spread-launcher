@@ -2,10 +2,11 @@
 
 set -x
 
-TASK="update-ubuntu-20.04-64"
+GOOGLE_ACTION="update"
+GOOGLE_TASK="ubuntu-20.04-64"
+
 CURR_DIR="$(pwd)"
 TMP_IMAGE_ID="$(date +%N)"
-
 SNAPD_DIR="$CURR_DIR/snapd"
 SPREAD_IMAGES_DIR="$CURR_DIR/spread-images"
 
@@ -16,14 +17,40 @@ mv sa.json "$SPREAD_IMAGES_DIR/sa.json"
 # Prepare snapd project
 git clone https://github.com/snapcore/snapd.git "$SNAPD_DIR"
 
-# run spread-images task
-. "$SPREAD_IMAGES_DIR/google_task.sh"
+# Get the images variables to use:
+# SOURCE_SYSTEM: source system for the GOOGLE_TASK
+# TARGET_SYSTEM: target system for the GOOGLE_TASK
+# RUN_SNAPD: true when snapd tests have to pass to publish the image
+. "$SPREAD_IMAGES_DIR/lib/google_task.sh"
+
+# Run spread-images task
 cd "$SPREAD_IMAGES_DIR"
-get_env_for_task_google "$TASK"
-run_spread_images "$TASK"
+SPREAD_TMP_IMAGE_ID=
+if [ "$RUN_SNAPD" = "true" ]; then
+	SPREAD_TMP_IMAGE_ID="$TMP_IMAGE_ID"
+    echo "Running spread-images task and creating tmp image"
+fi
+
+spread "google:${SOURCE_SYSTEM}:tasks/google/${TASK}"
+
+if [ "$RUN_SNAPD" != "true" ]; then
+	exit
+fi
 
 # run snapd tests
-. "$SPREAD_IMAGES_DIR/google_task.sh"
+echo "Configuring target image"
+python3 "$SPREAD_IMAGES_DIR/lib/tool/update_spread_yaml.py" "$SNAPD_DIR/spread.yaml" "google" "$TARGET_SYSTEM" "$IMAGE" "8"
+
 cd "$SNAPD_DIR"
-get_env_for_task_google "$TASK"
-run_snapd "$TASK"
+PUBLISH_IMAGE=false
+if spread "google:${TARGET_SYSTEM}"; then
+	PUBLISH_IMAGE=true
+fi
+
+# Publish the final image and clean the temporal one
+cd "$SPREAD_IMAGES_DIR"
+if [ "$PUBLISH_IMAGE" = true ]; then
+	SPREAD_TARGET_SYSTEM=$TARGET_SYSTEM spread "google:${SOURCE_SYSTEM}:tasks/common/publish-tmp-image"
+else
+	spread "google:${SOURCE_SYSTEM}:tasks/common/remove-tmp-image"
+fi

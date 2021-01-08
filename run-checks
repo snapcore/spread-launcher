@@ -42,7 +42,7 @@ fi
 
 # run snapd tests
 echo "Configuring target image"
-python3 "$SPREAD_IMAGES_DIR/lib/tool/update_spread_yaml.py" "$SNAPD_DIR/spread.yaml" "google" "$TARGET_SYSTEM" "$IMAGE" "8"
+python3 "$SPREAD_IMAGES_DIR/lib/tools/update_spread_yaml.py" "$SNAPD_DIR/spread.yaml" "google" "$TARGET_SYSTEM" "$IMAGE" "8"
 
 cd "$SNAPD_DIR"
 PUBLISH_IMAGE=false

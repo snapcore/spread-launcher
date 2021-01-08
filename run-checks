@@ -32,7 +32,7 @@ if [ "$RUN_SNAPD" = "true" ]; then
 fi
 
 if ! spread "google:${SOURCE_SYSTEM}:tasks/google/${GOOGLE_ACTION}/${GOOGLE_TASK}"; then
-	echo "Spread images task failed, exiting"
+	echo "Spread images task failed, exiting..."
 	exit 1
 fi
 
@@ -42,7 +42,10 @@ fi
 
 # run snapd tests
 echo "Configuring target image"
-python3 "$SPREAD_IMAGES_DIR/lib/tools/update_spread_yaml.py" "$SNAPD_DIR/spread.yaml" "google" "$TARGET_SYSTEM" "$IMAGE" "8"
+if ! python3 "$SPREAD_IMAGES_DIR/lib/tools/update_spread_yaml.py" "$SNAPD_DIR/spread.yaml" "google" "$TARGET_SYSTEM" "$IMAGE" "8"; then
+	echo "Failed to update spread.yaml, exiting..."
+	exit 1
+fi
 
 cd "$SNAPD_DIR"
 PUBLISH_IMAGE=false

@@ -31,7 +31,10 @@ if [ "$RUN_SNAPD" = "true" ]; then
     echo "Running spread-images task and creating tmp image"
 fi
 
-spread "google:${SOURCE_SYSTEM}:tasks/google/${TASK}"
+if ! spread "google:${SOURCE_SYSTEM}:tasks/google/${GOOGLE_ACTION}/${GOOGLE_TASK}"; then
+	echo "Spread images task failed, exiting"
+	exit 1
+fi
 
 if [ "$RUN_SNAPD" != "true" ]; then
 	exit

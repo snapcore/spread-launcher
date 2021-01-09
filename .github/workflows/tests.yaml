@@ -1,0 +1,20 @@
+name: Tests
+on:
+  push:
+    branches:
+      - '**'        # matches every branch
+      - '!master'   # excludes master
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run test
+      env:
+          IMAGE_BAKER_SA: ${{ secrets.IMAGE_BAKER_SA }}
+      run: |
+          echo "$IMAGE_BAKER_SA" > sa.json
+          ./run-checks

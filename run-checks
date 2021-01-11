@@ -3,7 +3,7 @@
 set -x
 
 GOOGLE_ACTION="update-image"
-GOOGLE_TASK="fedora-32-64"
+GOOGLE_TASK="fedora-33-64"
 
 git clone https://github.com/snapcore/spread-cron.git spread-cron-master
 ./spread-cron-master/lib/run_google_action.sh "$GOOGLE_ACTION" "$GOOGLE_TASK"

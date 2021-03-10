@@ -7,7 +7,7 @@ prepare: |
 
 restore: |
     rm -f *.img
-    snap remove google-cloud-sdk
+    snap remove google-cloud-sdk || true
    
 execute: |
     wget -q "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img"

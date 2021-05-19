@@ -3,7 +3,7 @@
 set -x
 
 GOOGLE_ACTION="update-image"
-GOOGLE_TASK="debian-9"
+GOOGLE_TASK="debian-10"
 
 git clone https://github.com/snapcore/spread-cron.git spread-cron-master
 ./spread-cron-master/lib/run_google_action.sh "$GOOGLE_ACTION" "$GOOGLE_TASK"

@@ -3,7 +3,7 @@
 set -x
 
 GOOGLE_ACTION="update-image"
-GOOGLE_TASK="ubuntu-16.04-32"
+GOOGLE_TASK="ubuntu-18.04-32"
 
 git clone https://github.com/snapcore/spread-cron.git spread-cron-master
 ./spread-cron-master/lib/run_google_action.sh "$GOOGLE_ACTION" "$GOOGLE_TASK"
